@@ -170,6 +170,8 @@ void initGame(){
 		// 	- Create and store cabbages/clocks in the same items array
 		// 	- You can use the above newX/newY to set their position in constructor
 
+    items[i] = new Cabbage(newX,newY);
+    
 	}
 }
 
@@ -237,7 +239,8 @@ void draw() {
 
 		// Items
 		// Requirement #3: Display and check collision with player for each item in Item[] items
-
+    //Clock.display();
+    
 		// Player
 
 		player.update();
