@@ -1,4 +1,4 @@
-class Robot {
+class Robot extends Enemy {
 	// Requirement #5: Complete Dinosaur Class
 
 	final int PLAYER_DETECT_RANGE_ROW = 2;
@@ -6,7 +6,57 @@ class Robot {
 	final int HAND_OFFSET_Y = 37;
 	final int HAND_OFFSET_X_FORWARD = 64;
 	final int HAND_OFFSET_X_BACKWARD = 16;
-
+  int coolDownTimer=0;
+  float speed = 2f;
+  Laser laser;
+  
+  Robot(float x, float y) {
+    super(x, y);
+  }
+  
+  void display(){
+    pushMatrix();
+    translate(x,y);
+    if (speed > 0) {
+      scale(1, 1);
+      image(robot, 0, 0, w, h); 
+    } 
+    if (speed < 0) {
+      scale(-1, 1);
+      image(robot, -w, 0, w, h); 
+    }
+    popMatrix();
+  }
+  
+  void update(){
+    if( x >= width-80 || x<=0) speed*=-1;
+    if (coolDownTimer == 0) {
+      if(abs(player.y- this.y)/SOIL_SIZE 
+      <= PLAYER_DETECT_RANGE_ROW 
+      && speed>0 && this.x>player.x){
+        laser.fire(x+HAND_OFFSET_X_FORWARD, y+HAND_OFFSET_Y, player.x+SOIL_SIZE/2, player.y+SOIL_SIZE/2);
+      }
+      if(abs(player.y- this.y)/SOIL_SIZE 
+      <= PLAYER_DETECT_RANGE_ROW 
+      && speed>0 && this.x>player.x){
+        laser.fire(x+HAND_OFFSET_X_BACKWARD, y+HAND_OFFSET_Y, player.x+SOIL_SIZE/2, player.y+SOIL_SIZE/2);
+      }
+    }else{
+      coolDownTimer--;
+    }
+    if(coolDownTimer >= 0){
+      x += speed;
+      if (x >= width-SOIL_SIZE||x<=0) speed*=-1;
+    }
+    
+  }
+  
+  void checkCollision(Player player){
+    laser = new Laser();
+    super.checkCollision(player);
+    laser.checkCollision(player);
+  }
+  
 	// HINT: Player Detection in update()
 	/*
 
