@@ -11,26 +11,26 @@ class Cabbage extends Item {
   //Code for Reference:
   void display() {
     if(isAlive == true){
-      for (int i = 0; i < cabbageX.length; i++) {
+      //for (int i = 0; i < cabbageX.length; i++) {
         // Display Cabbage
-        image(cabbage, cabbageX[i], cabbageY[i]);
-      }
+        image(cabbage, x, y);
+      //}
     }
     
   }
 
   // Check collision with player
   void checkCollision(Player player) {
-    for (int i = 0; i < cabbageX.length; i++) {
+    //for (int i = 0; i < cabbageX.length; i++) {
       if (player.health < player.PLAYER_MAX_HEALTH
-        && isHit(cabbageX[i], cabbageY[i], w, h, player.x, player.y, player.w, player.h)
+        && isHit(x, y, w, h, player.x, player.y, player.w, player.h)
         && isAlive == true) {
   
         player.health ++;
         isAlive = false;
         //cabbageX[i] = cabbageY[i] = -1000; // Now that they're objects, toggle isAlive instead of throwing them away from screen
       }
-    }
+    //}
     
   }
 }
