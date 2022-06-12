@@ -3,6 +3,7 @@ class Dinosaur extends Enemy {
 
 	final float TRIGGERED_SPEED_MULTIPLIER = 5;
   float speed = 1f;
+  final float ORIGINAL_SPEED = 1f;
   
   Dinosaur(float x,float y){
     super(x,y);
@@ -25,12 +26,21 @@ class Dinosaur extends Enemy {
    }
   
   void update(){
-    if(player.y==this.y && speed>0 && this.x>player.x){//right side
-      speed *= TRIGGERED_SPEED_MULTIPLIER;
-    }else if(player.y==this.y && speed<0 && this.x<player.x)//left side
-    {
-      speed *= TRIGGERED_SPEED_MULTIPLIER;
+    if(player.y==this.y && speed>0 && this.x<player.x){//right side
+      speed = ORIGINAL_SPEED*TRIGGERED_SPEED_MULTIPLIER;
+      x += speed;
+    }else if(speed==5 && player.y!=this.y ){
+      speed = ORIGINAL_SPEED;
     }
+    
+    if(player.y==this.y && speed<0 && this.x>player.x){//left side
+      speed = ORIGINAL_SPEED*TRIGGERED_SPEED_MULTIPLIER*-1;
+      x += speed;
+    }else if(speed==-5 && player.y!=this.y ){
+      speed = ORIGINAL_SPEED*-1;
+    }
+    
+    //println(speed);
     x += speed;
     if(x >= width-SOIL_SIZE || x<=0) speed*=-1;
   }
