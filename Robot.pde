@@ -8,6 +8,8 @@ class Robot extends Enemy {
 	final int HAND_OFFSET_X_BACKWARD = 16;
   int coolDownTimer=0;
   float speed = 2f;
+  
+  float currentX;
   Laser laser;
   
   Robot(float x, float y) {
@@ -29,25 +31,46 @@ class Robot extends Enemy {
   }
   
   void update(){
-    if( x >= width-80 || x<=0) speed*=-1;
+    /*if( x >= width-80 || x<=0) speed*=-1;
     if (coolDownTimer == 0) {
       if(abs(player.y- this.y)/SOIL_SIZE 
       <= PLAYER_DETECT_RANGE_ROW 
-      && speed>0 && this.x>player.x){
+      && this.x<player.x){//right
         laser.fire(x+HAND_OFFSET_X_FORWARD, y+HAND_OFFSET_Y, player.x+SOIL_SIZE/2, player.y+SOIL_SIZE/2);
       }
       if(abs(player.y- this.y)/SOIL_SIZE 
       <= PLAYER_DETECT_RANGE_ROW 
-      && speed>0 && this.x>player.x){
+      && this.x>player.x){//left
         laser.fire(x+HAND_OFFSET_X_BACKWARD, y+HAND_OFFSET_Y, player.x+SOIL_SIZE/2, player.y+SOIL_SIZE/2);
       }
     }else{
+      
+      x += speed;
+    }
+    
+    if(coolDownTimer >= 0){
       coolDownTimer--;
     }
-    if(coolDownTimer >= 0){
       x += speed;
-      if (x >= width-SOIL_SIZE||x<=0) speed*=-1;
+      if (x >= width-SOIL_SIZE||x<=0) speed*=-1;*/
+    
+    
+    if(abs(player.y- this.y)/SOIL_SIZE 
+      <= PLAYER_DETECT_RANGE_ROW 
+      && this.x<player.x){//right
+      x = currentX;
     }
+    if(abs(player.y- this.y)/SOIL_SIZE 
+      <= PLAYER_DETECT_RANGE_ROW 
+      && this.x>player.x){//left
+      x = currentX;
+    }
+    
+    x += speed;
+    currentX = x;
+    println(speed);
+    if (x >= width-SOIL_SIZE||x<=0) speed*=-1;
+    
     
   }
   
